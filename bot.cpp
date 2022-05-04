@@ -21,8 +21,10 @@ int main()
 
     });
     
-    dpp::activity status = dpp::activity(3, " you.", "", "");
-    bot.set_presence( dpp::activity.status );
+    bot.set_presence( dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
 
     bot.start(false);
+
+    std::cout << "Test!!";
+    return 0;
 }
