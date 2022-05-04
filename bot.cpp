@@ -8,6 +8,8 @@ int main()
 {
     dpp::cluster bot(BOT_TOKEN);
 
+    bot.on_log(dpp::utility::cout_logger());
+
     bot.on_interaction_create([](const dpp::interaction_create_t& event) {
         if (event.command.get_command_name() == "ping") { event.reply ("Pong!"); }
     });
@@ -21,10 +23,9 @@ int main()
 
     });
     
-    bot.set_presence( dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
+    bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
 
     bot.start(false);
-
-    std::cout << "Test!!";
+    
     return 0;
 }
