@@ -15,6 +15,9 @@ int main()
     });
 
     bot.on_ready([&bot](const dpp::ready_t& event) {
+
+        bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
+
         if (dpp::run_once<struct register_bot_commands>()) 
         {
             bot.global_command_create( dpp::slashcommand("ping", "Ping pong!", bot.me.id));
@@ -23,9 +26,7 @@ int main()
 
     });
     
-    bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
-
     bot.start(false);
-    
+
     return 0;
 }
