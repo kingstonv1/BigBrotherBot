@@ -1,32 +1,31 @@
 #include <dpp/dpp.h>
+#include "info.h"
 
-const std::string BOT_TOKEN = "OTcxMzk1MTM4NTgyNjE0MDI2.G6xU_r.WG_lvW4jqGSxZ99qfH3Q40EOze1cdv8E9Op8rc";
-const dpp::snowflake MY_GUILD_ID = 965808852421455903;
-const std::string& firstMessage {"Go about your daily lives. There Is No Admin Abuse."};
+const std::string& firstMessageContents {"Go about your daily lives. There Is No Admin Abuse."};
+//dpp::snowflake& generalChat = 965808852421455910;
 
 int main() 
 {
     dpp::cluster bot(BOT_TOKEN);
-
     bot.on_log(dpp::utility::cout_logger());
 
-    bot.on_interaction_create([](const dpp::interaction_create_t& event) {
-        if (event.command.get_command_name() == "ping") { event.reply ("Pong!"); }
-    });
+    if ( bot.on_message_create ) 
+        {  }
 
-    bot.on_ready([&bot](const dpp::ready_t& event) {
+    dpp::message newMessage(965808852421455910, firstMessageContents, dpp::mt_default);
 
-        bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_watching, " you.") );
 
-        if (dpp::run_once<struct register_bot_commands>()) 
-        {
+    bot.on_ready( [&bot](const dpp::ready_t& event) 
+    {
+        if ( dpp::run_once<struct register_bot_commands>() ) 
+        { 
+            bot.set_presence(dpp::presence(dpp::ps_online, dpp::at_watching, " you.") ); 
             bot.global_command_create( dpp::slashcommand("ping", "Ping pong!", bot.me.id));
-            bot.message_create(firstMessage);
         }
-
     });
-    
-    bot.start(false);
 
+
+    bot.start(false);    
     return 0;
+
 }
